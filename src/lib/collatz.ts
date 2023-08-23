@@ -1,5 +1,6 @@
 export function collatz(n: number): number {
-    if (n % 2 === 0) {
+    if (n === 0) return 0;
+    else if (n % 2 === 0) {
         return n / 2;
     } else {
         return 3 * n + 1;
@@ -8,6 +9,11 @@ export function collatz(n: number): number {
 
 export const base = {
     current: (n: number): number => {
+        if (n === 0) {
+            // technically there is no base
+            return 0;
+        }
+        
         while (n % 2 === 0) {
             n /= 2;
         }
@@ -24,7 +30,7 @@ export const path = {
     normal: (n: number): number[] => {
         let current: number[] = [n];
         
-        while (n !== 1) {
+        while (n !== 1 && n !== 0) {
             n = collatz(n);
             current.push(n);
         }
@@ -35,7 +41,7 @@ export const path = {
     base: (n: number): number[] => {
         let current: number[] = [n];
         
-        while (n !== 1) {
+        while (n !== 1 && n !== 0) {
             n = base.next(n);
             current.push(base.current(n));
         }
@@ -45,8 +51,6 @@ export const path = {
     
     normalGrouped: (n: number): number[][] => {
         const normal = path.normal(n);
-        console.log(normal);
-        
         
         // Group elements until they hit a 2n + 1 number, then start a new group
         
