@@ -17,19 +17,19 @@
 
   <div class="form-control w-52">
     <label class="cursor-pointer label">
-      <span class="label-text">Indicate Primes</span> 
+      <span class="label-text">Indicate Prime</span> 
       <input bind:checked={config.primes} type="checkbox" class="toggle toggle-md toggle-secondary" />
     </label>
   </div>
   
-  <!-- <div class="form-control w-52">
+ <div class="form-control w-52">
     <label class="cursor-pointer label">
       <span class="label-text">Indicate Slope</span> 
-      <input bind:checked={config.slope} type="checkbox" class="toggle toggle-md toggle-accent" />
+      <input bind:checked={config.slope} type="checkbox" class="toggle toggle-md toggle-success" />
     </label>
   </div>
   
-  <div class="form-control w-52">
+  <!-- <div class="form-control w-52">
     <label class="cursor-pointer label">
       <span class="label-text">Indicate Family</span> 
       <input bind:checked={config.family} type="checkbox" class="toggle toggle-md toggle-success" />

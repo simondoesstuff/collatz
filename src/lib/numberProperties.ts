@@ -10,16 +10,21 @@ export function inBinary(decimal: number): boolean[] {
     return binary;
 }
 
+let primeCache = new Map<number, boolean>();
 export function isPrime(n: number): boolean {
     if (n === 1) {
         return false;
     }
+    
+    if (primeCache.has(n)) return primeCache.get(n) as boolean;
 
     for (let i = 2; i < n; i++) {
         if (n % i === 0) {
+            primeCache.set(n, false);
             return false
         }
     }
 
+    primeCache.set(n, true);
     return true;
 }
