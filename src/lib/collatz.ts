@@ -110,6 +110,8 @@ export const path = {
             }
         }
         
+        groups.push(currentGroup);
+        
         return groups;
     }
 }
