@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
+  import { page } from "$app/stores";
   import type { Config } from "./config";
 
   export let config: Config;
@@ -15,6 +17,14 @@
   
   let groupBySelection = config.sort;
   $: config.sort = groupBySelection;
+  
+  function resetButton() {
+    if (typeof window !== 'undefined') {
+      // erase all query params
+      history.pushState({}, '', $page.url.pathname);
+      location = location;
+    }
+  }
 </script>
 
 <div class="flex flex-col w-56">
@@ -97,6 +107,12 @@
         </span></span
       ></label
     >
+  </div>
+  
+  <div class="flex justify-center mt-5">
+    <button class="btn shadow-lg" on:click={resetButton}>
+      Reset
+    </button>
   </div>
 </div>
 
