@@ -28,3 +28,7 @@ export function isPrime(n: number): boolean {
     primeCache.set(n, true);
     return true;
 }
+
+export function fitsFamily(n: number, coefficient: number, constant: number): boolean {
+    return (n - constant) % coefficient === 0;
+}

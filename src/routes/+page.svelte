@@ -1,8 +1,10 @@
 <script lang="ts">
   import * as collatz from "$lib/collatz";
-  import CollatzNumber from "../comps/collatzNumber.svelte";
+  import CollatzNumber from "./comps/collatzNumber.svelte";
   import BacktrackVisual from "./comps/backtrackVisual.svelte";
+  import { defaultConfig } from "./comps/config";
   import Config from "./comps/config.svelte";
+  import { fitsFamily } from "$lib/numberProperties";
 
   let expMode = false;
   let nExp = "11";
@@ -35,12 +37,7 @@
 
   let configModal: any;
 
-  let config = {
-    bases: true,
-    primes: false,
-    slope: false,
-    family: false,
-  };
+  let config = defaultConfig();
 
   let backtrackModalController: any;
   let backtrackFloat: any;
@@ -138,17 +135,11 @@
         {#each path as row}
           <div class=" flex rounded-md flex-wrap">
             {#each row as n, i}
-              <button
-                class="hover:brightness-75 dark:hover:brightness-150 hover:bg-[#00000077] dark:hover:bg-[#ffffff77]
-            hover:rounded-md hover:scale-125 transition-transform duration-300"
-                on:click={(e) => handleBacktrack(e, row[row.length - i - 1])}
-              >
                 <CollatzNumber
+                  onClick={(e) => handleBacktrack(e, row[row.length - i - 1])}
                   n={row[row.length - i - 1]}
-                  indicateIfPrime={config.primes}
-                  highlightBases={config.bases}
+                  config={config}
                 />
-              </button>
             {/each}
           </div>
         {/each}
