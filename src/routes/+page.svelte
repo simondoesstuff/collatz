@@ -4,9 +4,8 @@
   import BacktrackVisual from "./comps/backtrackVisual.svelte";
   import { defaultConfig } from "./comps/config";
   import Config from "./comps/config.svelte";
-  import { fitsFamily } from "$lib/numberProperties";
 
-  let expMode = false;
+  let expMode = true;
   let nExp = "11";
   let n = 11;
 
@@ -137,7 +136,7 @@
             {#each row as n, i}
                 <CollatzNumber
                   onClick={(e) => handleBacktrack(e, row[row.length - i - 1])}
-                  n={row[row.length - i - 1]}
+                  root={row[row.length - i - 1]}
                   config={config}
                 />
             {/each}

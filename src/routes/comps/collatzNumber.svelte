@@ -4,17 +4,40 @@
   import type { Config } from "./config";
 
   export let onClick: (event: MouseEvent) => void;
-  export let n = 11;
+  export let root = 11;
   export let config: Config;
 
-  $: showPrime = numProps.isPrime(n) && config.primes;
-  $: showBase = config.bases && n % 2 == 1;
-  
-  $: inFamilyIsolate = numProps.fitsFamily(n, config.isolate.coefficient, config.isolate.constant);
+  $: showPrime = numProps.isPrime(root) && config.primes;
+  $: showBase = config.bases && root % 2 == 1;
+
+  $: inFamilyIsolate = numProps.fitsFamily(
+    root,
+    config.isolate.coefficient,
+    config.isolate.constant
+  );
   $: gray = config.isolate.hideOrGray && !inFamilyIsolate;
   $: hide = !config.isolate.hideOrGray && !inFamilyIsolate;
-</script>
 
+  let shownRoot: number;
+  $: if (config.isolate.useInner) {
+    if (inFamilyIsolate) {
+      shownRoot = numProps.familyInner(
+        root,
+        config.isolate.coefficient,
+        config.isolate.constant
+      );
+    } else {
+      shownRoot = root;
+    }
+  } else {
+    shownRoot = root;
+  }
+
+  $: binary = numProps
+    .inBinary(shownRoot)
+    .map((x) => (x ? 1 : 0))
+    .join("");
+</script>
 
 {#if !hide}
   <button
@@ -25,17 +48,18 @@
     <p
       class="min-w-8 min-h-8 p-1 transition-bg duration-300 text-center"
       transition:fade={{ delay: 250, duration: 300 }}
-      
       class:bg-primary-content={showBase}
       class:text-primary={showBase}
-      
       class:badge={showPrime}
       class:badge-outline={showPrime}
       class:badge-secondary={showPrime}
-      
       class:opacity-30={gray}
     >
-      {n}
+      {#if config.binary}
+        {binary}
+      {:else}
+        {shownRoot}
+      {/if}
     </p>
   </button>
 {/if}

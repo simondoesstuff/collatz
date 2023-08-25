@@ -1,4 +1,6 @@
 export function inBinary(decimal: number): boolean[] {
+    if (decimal === 0) return [false];
+    
     let binary: boolean[] = [];
     let n = decimal;
 
@@ -6,6 +8,9 @@ export function inBinary(decimal: number): boolean[] {
         binary.push(n % 2 === 1);
         n = Math.floor(n / 2);
     }
+    
+    // reverse
+    binary = binary.reverse();
 
     return binary;
 }
@@ -31,4 +36,8 @@ export function isPrime(n: number): boolean {
 
 export function fitsFamily(n: number, coefficient: number, constant: number): boolean {
     return (n - constant) % coefficient === 0;
+}
+
+export function familyInner(n: number, coefficient: number, constant: number): number {
+    return (n - constant) / coefficient;
 }

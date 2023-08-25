@@ -4,8 +4,10 @@ export interface Config {
   isolate: {
     coefficient: number,
     constant: number
-    hideOrGray: boolean
-  }
+    hideOrGray: boolean,
+    useInner: boolean,
+  },
+  binary: false
 }
 
 
@@ -15,6 +17,8 @@ export const defaultConfig: () => Config = () => ({
     isolate: {
       coefficient: 1,
       constant: 0,
-      hideOrGray: true
-    }
+      hideOrGray: true,
+      useInner: false,
+    },
+    binary: false
 });
