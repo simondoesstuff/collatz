@@ -3,10 +3,18 @@
 
   export let config: Config;
 
-  let coefficient = config.isolate.coefficient;
-  let constant = config.isolate.constant;
-  $: if (!isNaN(coefficient)) config.isolate.coefficient = coefficient;
-  $: if (!isNaN(constant)) config.isolate.constant = constant;
+  let coefficient = config.isolate.coef;
+  let constant = config.isolate.const;
+  $: if (!isNaN(coefficient)) config.isolate.coef = coefficient;
+  $: if (!isNaN(constant)) config.isolate.const = constant;
+  
+  let groupByOptions = [
+    { key: 'base', display: 'Base' },
+    { key: 'slope', display: 'Base to Base Slope' },
+  ];
+  
+  let groupBySelection = config.sort;
+  $: config.sort = groupBySelection;
 </script>
 
 <div class="flex flex-col w-56">
@@ -14,7 +22,7 @@
     <label class="cursor-pointer label">
       <span class="label-text">Highlight Bases</span>
       <input
-        bind:checked={config.bases}
+        bind:checked={config.base}
         type="checkbox"
         class="toggle toggle-md toggle-primary"
       />
@@ -23,9 +31,9 @@
 
   <div class="form-control">
     <label class="cursor-pointer label">
-      <span class="label-text">Indicate Prime</span>
+      <span class="label-text">Indicate Primes</span>
       <input
-        bind:checked={config.primes}
+        bind:checked={config.prime}
         type="checkbox"
         class="toggle toggle-md toggle-secondary"
       />
@@ -36,7 +44,7 @@
     <label class="cursor-pointer label">
       <span class="label-text">In Binary</span>
       <input
-        bind:checked={config.binary}
+        bind:checked={config.bin}
         type="checkbox"
         class="toggle toggle-md"
       />
@@ -60,7 +68,7 @@
       <label class="label">
         <span class="label-text">Hide</span>
         <input
-          bind:checked={config.isolate.hideOrGray}
+          bind:checked={config.isolate.hide}
           type="checkbox"
           class="toggle toggle-md"
         />
@@ -69,12 +77,26 @@
       <label class="label">
         <span class="label-text">Use Inner</span>
         <input
-          bind:checked={config.isolate.useInner}
+          bind:checked={config.isolate.inner}
           type="checkbox"
           class="toggle toggle-md"
         />
       </label>
     </div>
+  </div>
+
+  <div class="form-control w-full max-w-xs">
+    <label class="label">
+      <span class="label-text"
+        >Group By<span>
+          <select class="select select-bordered" bind:value={groupBySelection}>
+            {#each groupByOptions as { key, display }}
+              <option selected={key === groupBySelection} value={key}>{display}</option>
+            {/each}
+          </select>
+        </span></span
+      ></label
+    >
   </div>
 </div>
 

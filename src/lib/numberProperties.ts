@@ -39,5 +39,6 @@ export function fitsFamily(n: number, coefficient: number, constant: number): bo
 }
 
 export function familyInner(n: number, coefficient: number, constant: number): number {
+    if (!fitsFamily(n, coefficient, constant)) throw new Error("Number does not fit family");
     return (n - constant) / coefficient;
 }

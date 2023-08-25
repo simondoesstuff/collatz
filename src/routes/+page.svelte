@@ -4,6 +4,9 @@
   import BacktrackVisual from "./comps/backtrackVisual.svelte";
   import { defaultConfig } from "./comps/config";
   import Config from "./comps/config.svelte";
+  import { goto } from "$app/navigation";
+  import { page } from "$app/stores"; 
+  import { onMount } from "svelte";
 
   let expMode = true;
   let nExp = "11";
@@ -29,13 +32,18 @@
     parseExp();
   }
 
-  $: path = collatz.path.normalGrouped(n);
+  let path: number[][];
+  $: if (config.sort == 'slope') {
+    path = collatz.path.slopeGrouped(n);
+  } else {
+    path = collatz.path.baseGrouped(n);
+  }
+  
   $: pathUnwrapped = path.reduce((a, b) => a.concat(b));
   $: basePathLength = path.length;
   $: pathLength = pathUnwrapped.length;
 
   let configModal: any;
-
   let config = defaultConfig();
 
   let backtrackModalController: any;
@@ -70,6 +78,25 @@
     backtrackModalController.showModal();
     backtrackKey = {};
     backtrackRootValue = n;
+  }
+  
+  //   Store state in the URL
+  
+  {
+    // load state from URL
+    let params = $page.url.searchParams;
+    let nParam = params.get('n');
+    let confParam = params.get('conf');
+    if (nParam) nExp = nParam;
+    if (confParam) config = JSON.parse(confParam);
+  }
+  
+  $: if (typeof window !== 'undefined') {
+    // save state to URL
+    let params = $page.url.searchParams;
+    params.set('n', n.toString());
+    params.set('conf', JSON.stringify(config));
+    history.pushState({}, '', $page.url.toString());
   }
 </script>
 

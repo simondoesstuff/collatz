@@ -7,24 +7,24 @@
   export let root = 11;
   export let config: Config;
 
-  $: showPrime = numProps.isPrime(root) && config.primes;
-  $: showBase = config.bases && root % 2 == 1;
+  $: showPrime = numProps.isPrime(root) && config.prime;
+  $: showBase = config.base && root % 2 == 1;
 
   $: inFamilyIsolate = numProps.fitsFamily(
     root,
-    config.isolate.coefficient,
-    config.isolate.constant
+    config.isolate.coef,
+    config.isolate.const
   );
-  $: gray = config.isolate.hideOrGray && !inFamilyIsolate;
-  $: hide = !config.isolate.hideOrGray && !inFamilyIsolate;
+  $: gray = config.isolate.hide && !inFamilyIsolate;
+  $: hide = !config.isolate.hide && !inFamilyIsolate;
 
   let shownRoot: number;
-  $: if (config.isolate.useInner) {
+  $: if (config.isolate.inner) {
     if (inFamilyIsolate) {
       shownRoot = numProps.familyInner(
         root,
-        config.isolate.coefficient,
-        config.isolate.constant
+        config.isolate.coef,
+        config.isolate.const
       );
     } else {
       shownRoot = root;
@@ -55,7 +55,7 @@
       class:badge-secondary={showPrime}
       class:opacity-30={gray}
     >
-      {#if config.binary}
+      {#if config.bin}
         {binary}
       {:else}
         {shownRoot}

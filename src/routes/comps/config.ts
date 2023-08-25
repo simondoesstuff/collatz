@@ -1,24 +1,26 @@
 export interface Config {
-  bases: boolean,
-  primes: boolean,
+  base: boolean,
+  prime: boolean,
   isolate: {
-    coefficient: number,
-    constant: number
-    hideOrGray: boolean,
-    useInner: boolean,
+    coef: number,
+    const: number
+    hide: boolean,
+    inner: boolean,
   },
-  binary: false
+  bin: false,
+  sort: "base"|"slope"
 }
 
 
 export const defaultConfig: () => Config = () => ({
-    bases: true,
-    primes: false,
+    base: true,
+    prime: false,
     isolate: {
-      coefficient: 1,
-      constant: 0,
-      hideOrGray: true,
-      useInner: false,
+      coef: 1,
+      const: 0,
+      hide: true,
+      inner: false,
     },
-    binary: false
+    bin: false,
+    sort: 'base'
 });
