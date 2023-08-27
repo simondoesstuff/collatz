@@ -9,19 +9,28 @@
   let constant = config.isolate.const;
   $: if (!isNaN(coefficient)) config.isolate.coef = coefficient;
   $: if (!isNaN(constant)) config.isolate.const = constant;
-  
+
   let groupByOptions = [
-    { key: 'base', display: 'Base' },
-    { key: 'slope', display: 'Base to Base Slope' },
+    { key: "base", display: "Base" },
+    { key: "slope", display: "Base to Base Slope" },
   ];
-  
+
   let groupBySelection = config.sort;
   $: config.sort = groupBySelection;
-  
+
+  let baseOptions = [
+    { key: 10, display: "Decimal" },
+    { key: 2, display: "Binary" },
+    { key: 6, display: "Base 6" },
+  ];
+
+  let baseSelection = config.base;
+  $: config.base = baseSelection;
+
   function resetButton() {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       // erase all query params
-      history.pushState({}, '', $page.url.pathname);
+      history.pushState({}, "", $page.url.pathname);
       location = location;
     }
   }
@@ -32,7 +41,7 @@
     <label class="cursor-pointer label">
       <span class="label-text">Highlight Bases</span>
       <input
-        bind:checked={config.base}
+        bind:checked={config.colorOdd}
         type="checkbox"
         class="toggle toggle-md toggle-primary"
       />
@@ -46,17 +55,6 @@
         bind:checked={config.prime}
         type="checkbox"
         class="toggle toggle-md toggle-secondary"
-      />
-    </label>
-  </div>
-
-  <div class="form-control">
-    <label class="cursor-pointer label">
-      <span class="label-text">In Binary</span>
-      <input
-        bind:checked={config.bin}
-        type="checkbox"
-        class="toggle toggle-md"
       />
     </label>
   </div>
@@ -97,22 +95,36 @@
 
   <div class="form-control w-full max-w-xs">
     <label class="label">
-      <span class="label-text"
-        >Group By<span>
-          <select class="select select-bordered" bind:value={groupBySelection}>
+      <span class="label-text">Group By<span>
+          <select class="select select-bordered w-48" bind:value={groupBySelection}>
             {#each groupByOptions as { key, display }}
-              <option selected={key === groupBySelection} value={key}>{display}</option>
+              <option selected={key === groupBySelection} value={key}>
+                {display}
+              </option>
             {/each}
           </select>
-        </span></span
-      ></label
-    >
+        </span>
+      </span>
+    </label>
   </div>
-  
+
+  <div class="form-control w-full max-w-xs">
+    <label class="label">
+      <span class="label-text">Base<span>
+          <select class="select select-bordered w-48" bind:value={baseSelection}>
+            {#each baseOptions as { key, display }}
+              <option selected={key === baseSelection} value={key}>
+                {display}
+              </option>
+            {/each}
+          </select>
+        </span>
+      </span>
+    </label>
+  </div>
+
   <div class="flex justify-center mt-5">
-    <button class="btn shadow-lg" on:click={resetButton}>
-      Reset
-    </button>
+    <button class="btn shadow-lg" on:click={resetButton}> Reset </button>
   </div>
 </div>
 

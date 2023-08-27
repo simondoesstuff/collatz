@@ -18,25 +18,27 @@
   $: gray = config.isolate.hide && !inFamilyIsolate;
   $: hide = !config.isolate.hide && !inFamilyIsolate;
 
-  let shownRoot: number;
-  $: if (config.isolate.inner) {
-    if (inFamilyIsolate) {
-      shownRoot = numProps.familyInner(
+  let displayRoot: string;
+  $: {
+    let value = root;
+    
+    if (config.isolate.inner && inFamilyIsolate) {
+      value = numProps.familyInner(
         root,
         config.isolate.coef,
         config.isolate.const
       );
-    } else {
-      shownRoot = root;
     }
-  } else {
-    shownRoot = root;
+    
+    if (config.base == 10) displayRoot = value.toString();
+    else {
+      // this won't work for bases > 10
+      // smashing digits together is a hack
+      let str = numProps.inBase(value, config.base)
+        .join('');
+      displayRoot = str;
+    }
   }
-
-  $: binary = numProps
-    .inBinary(shownRoot)
-    .map((x) => (x ? 1 : 0))
-    .join("");
 </script>
 
 {#if !hide}
@@ -55,11 +57,7 @@
       class:badge-secondary={showPrime}
       class:opacity-30={gray}
     >
-      {#if config.bin}
-        {binary}
-      {:else}
-        {shownRoot}
-      {/if}
+      {displayRoot}
     </p>
   </button>
 {/if}

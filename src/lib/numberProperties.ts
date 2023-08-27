@@ -1,18 +1,16 @@
-export function inBinary(decimal: number): boolean[] {
-    if (decimal === 0) return [false];
+export function inBase(n: number, base: number): number[] {
+    if ( n === 0) return [0];
     
-    let binary: boolean[] = [];
-    let n = decimal;
+    let baseN: number[] = [];
 
     while (n > 0) {
-        binary.push(n % 2 === 1);
-        n = Math.floor(n / 2);
+        baseN.push(n % base);
+        n = Math.floor(n / base);
     }
     
     // reverse
-    binary = binary.reverse();
-
-    return binary;
+    baseN = baseN.reverse();
+    return baseN;
 }
 
 let primeCache = new Map<number, boolean>();

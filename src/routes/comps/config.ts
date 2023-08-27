@@ -1,5 +1,5 @@
 export interface Config {
-  base: boolean,
+  colorOdd: boolean,
   prime: boolean,
   isolate: {
     coef: number,
@@ -7,13 +7,13 @@ export interface Config {
     hide: boolean,
     inner: boolean,
   },
-  bin: false,
+  base: 10|2|6,
   sort: "base"|"slope"
 }
 
 
 export const defaultConfig: () => Config = () => ({
-    base: true,
+    colorOdd: true,
     prime: false,
     isolate: {
       coef: 1,
@@ -21,6 +21,6 @@ export const defaultConfig: () => Config = () => ({
       hide: true,
       inner: false,
     },
-    bin: false,
+    base: 10,
     sort: 'base'
 });
